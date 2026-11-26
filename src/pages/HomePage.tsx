@@ -5,9 +5,10 @@ import {
   Globe2,
   Languages,
   Lock,
+  Moon,
   ShieldCheck,
   SlidersHorizontal,
-  Tv2,
+  Sun,
   UserCheck,
   Video,
 } from 'lucide-react';
@@ -20,6 +21,7 @@ import { ConnectionArcGraphic } from '../components/LiveMatchGraphic';
 import { CONVERSATION_MODES, INTERESTS, LANGUAGES } from '../shared/constants';
 import { apiRequest } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const COMMUNITY_PEOPLE = [
   {
@@ -157,7 +159,7 @@ interface HomePageProps {
 export function HomePage({ onOpenConsent }: HomePageProps) {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [adEnabled, setAdEnabled] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
   const [selectedMode, setSelectedMode] = useState(CONVERSATION_MODES[0].id);
   const [selectedInterests, setSelectedInterests] = useState<string[]>(['Music', 'Travel', 'Languages']);
   const [demoText, setDemoText] = useState('Hey! Do you want to practice Spanish or talk about travel?');
@@ -181,10 +183,6 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   const goChat = (query?: string) => {
     const target = query ? `/chat${query}` : '/chat';
     requireLogin(() => navigate(target));
-  };
-
-  const toggleAd = () => {
-    setAdEnabled((v) => !v);
   };
 
   const toggleInterest = (interest: string) => {
@@ -227,28 +225,29 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col bg-white dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors ${adEnabled ? 'ring-4 ring-inset ring-amber-400 dark:ring-amber-500' : ''}`}>
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors">
       <Header />
 
-      {/* Ad Toggle Bar */}
-      <div className={`sticky top-[57px] z-30 border-b transition-colors ${adEnabled ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-600/50' : 'bg-white dark:bg-[#17151D] border-neutral-200 dark:border-white/10'}`}>
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-2 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
-            <Tv2 className={`w-4 h-4 ${adEnabled ? 'text-amber-500 dark:text-amber-400' : 'text-neutral-400'}`} />
-            <span className={adEnabled ? 'text-amber-700 dark:text-amber-300 font-medium' : ''}>
-              {adEnabled ? 'Ads are ON — banner ads will appear on the site' : 'Ads are currently OFF'}
-            </span>
-          </div>
+      {/* Theme Toggle Bar */}
+      <div className="sticky top-[57px] z-30 border-b border-neutral-200 dark:border-white/10 bg-white/95 dark:bg-[#17151D]/95 backdrop-blur-md transition-colors">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-2 flex items-center justify-end">
           <button
             type="button"
-            onClick={toggleAd}
-            aria-pressed={adEnabled}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer ${adEnabled ? 'bg-amber-500' : 'bg-neutral-300 dark:bg-white/20'}`}
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 dark:border-white/15 bg-neutral-100 dark:bg-white/5 px-3.5 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
           >
-            <span className="sr-only">{adEnabled ? 'Disable ads' : 'Enable ads'}</span>
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${adEnabled ? 'translate-x-6' : 'translate-x-1'}`}
-            />
+            {isDark ? (
+              <>
+                <Sun className="w-4 h-4 text-amber-400" />
+                <span>Light mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-4 h-4 text-blue-600" />
+                <span>Dark mode</span>
+              </>
+            )}
           </button>
         </div>
       </div>
