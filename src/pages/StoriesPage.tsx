@@ -129,6 +129,7 @@ export function StoriesPage() {
       <main className="flex-1">
         <section className="border-b border-neutral-200 dark:border-white/10 bg-neutral-50/70 dark:bg-[#17151D]/60">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
+            {/* Page header row */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
               <div>
                 <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950 dark:text-white">
@@ -148,17 +149,20 @@ export function StoriesPage() {
               </button>
             </div>
 
-            {/* Story Bubbles Bar */}
-            <div className="mt-8 flex items-center gap-4 overflow-x-auto pb-2">
+            {/* Story Bubbles Bar — extra top padding so ring is never clipped */}
+            <div className="mt-10 pt-2 flex items-start gap-5 overflow-x-auto pb-3">
               {stories.slice(0, 8).map((story, idx) => (
                 <button
                   key={story.id}
                   type="button"
                   onClick={() => setViewerIndex(idx)}
-                  className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer"
+                  className="flex flex-col items-center gap-2 shrink-0 group cursor-pointer"
                 >
-                  <div className="flex items-center justify-center rounded-full overflow-hidden ring-2 ring-blue-600 ring-offset-2 ring-offset-neutral-50 dark:ring-offset-[#17151D] group-hover:scale-105 transition-transform">
-                    <PersonAvatar name={story.author_name} variant={idx} size="lg" />
+                  {/* p-1 gives room for the ring so overflow-hidden doesn't clip it */}
+                  <div className="p-1 rounded-full group-hover:scale-105 transition-transform">
+                    <div className="rounded-full ring-2 ring-blue-600 overflow-hidden">
+                      <PersonAvatar name={story.author_name} variant={idx} size="lg" />
+                    </div>
                   </div>
                   <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200 max-w-[76px] truncate">
                     {story.author_name.split(' ')[0]}
