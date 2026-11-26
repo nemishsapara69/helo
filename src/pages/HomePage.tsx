@@ -171,7 +171,7 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   /** Require login before running an action; redirect to /login preserving the next step. */
   const requireLogin = (next: () => void) => {
     if (!user) {
-      navigate('/login');
+      navigate('/login', { state: { from: '/chat' } });
       return;
     }
     next();
@@ -179,7 +179,8 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
 
   /** Navigate to the chat studio, or to login first when signed out. */
   const goChat = (query?: string) => {
-    requireLogin(() => navigate(query ? `/chat${query}` : '/chat'));
+    const target = query ? `/chat${query}` : '/chat';
+    requireLogin(() => navigate(target));
   };
 
   const toggleAd = () => {
@@ -201,7 +202,7 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
     if (!demoText.trim()) return;
     // Sign in required before using AI translation preview
     if (!user) {
-      navigate('/login');
+      navigate('/login', { state: { from: '/' } });
       return;
     }
     setTranslating(true);

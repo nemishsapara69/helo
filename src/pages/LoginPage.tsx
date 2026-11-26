@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { apiRequest, UserProfile } from '../lib/api';
@@ -13,6 +13,9 @@ export function LoginPage() {
   const [tab, setTab] = useState<AuthTab>('login');
   const { setSession } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  // If the user was redirected here from a protected action, go back there after login
+  const from = (location.state as { from?: string } | null)?.from || '/chat';
 
   // Login state
   const [loginEmail, setLoginEmail] = useState('');
@@ -76,7 +79,7 @@ export function LoginPage() {
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
       });
       setSession(res.accessToken, res.user);
-      navigate('/chat');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to log in.');
     } finally {
@@ -107,7 +110,7 @@ export function LoginPage() {
         }),
       });
       setSession(res.accessToken, res.user);
-      navigate('/chat');
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to create account.');
     } finally {
