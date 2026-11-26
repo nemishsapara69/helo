@@ -46,28 +46,31 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
       role="img"
       aria-label={`${name} avatar`}
     >
-      {/* Circular background */}
+      {/* Full circular background */}
       <circle cx="32" cy="32" r="32" fill={p.bg} />
 
-      {/* Shirt / body — sits in lower half, stops at y=58 so it doesn't reach the circle edge */}
-      <path d="M14 62C14 50 21 44 32 44C43 44 50 50 50 62Z" fill={p.shirt} />
+      {/* Body / shirt — wide trapezoid anchored well inside bottom of circle */}
+      <ellipse cx="32" cy="62" rx="22" ry="12" fill={p.shirt} />
 
-      {/* Head */}
-      <circle cx="32" cy="27" r="11" fill={p.skin} />
+      {/* Neck */}
+      <rect x="27" y="44" width="10" height="8" rx="3" fill={p.skin} />
 
-      {/* Hair */}
+      {/* Head — centred at y=34 so there's clear space above */}
+      <circle cx="32" cy="34" r="12" fill={p.skin} />
+
+      {/* Hair — cap that stays inside top of head, never touches y<16 */}
       <path
-        d="M21 26C21 18 26 13.5 32 13.5C38 13.5 43 18 43 26C41.5 22 38 20 32 20C26 20 22.5 22 21 26Z"
+        d="M20 33C20 24 25.5 18 32 18C38.5 18 44 24 44 33C42 28 38 25.5 32 25.5C26 25.5 22 28 20 33Z"
         fill={p.hair}
       />
 
       {/* Eyes */}
-      <circle cx="28.5" cy="27" r="1.3" fill="#1E293B" />
-      <circle cx="35.5" cy="27" r="1.3" fill="#1E293B" />
+      <circle cx="28" cy="34" r="1.4" fill="#1E293B" />
+      <circle cx="36" cy="34" r="1.4" fill="#1E293B" />
 
       {/* Smile */}
       <path
-        d="M29 32C30.2 33.4 33.8 33.4 35 32"
+        d="M28.5 39C29.8 40.5 34.2 40.5 35.5 39"
         stroke="#1E293B"
         strokeWidth="1.5"
         strokeLinecap="round"
