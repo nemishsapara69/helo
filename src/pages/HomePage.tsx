@@ -7,6 +7,7 @@ import {
   Lock,
   ShieldCheck,
   SlidersHorizontal,
+  Tv2,
   UserCheck,
   Video,
 } from 'lucide-react';
@@ -18,6 +19,7 @@ import { MediaImage } from '../components/MediaImage';
 import { ConnectionArcGraphic } from '../components/LiveMatchGraphic';
 import { CONVERSATION_MODES, INTERESTS, LANGUAGES } from '../shared/constants';
 import { apiRequest } from '../lib/api';
+import { useAuth } from '../context/AuthContext';
 
 const COMMUNITY_PEOPLE = [
   {
@@ -154,6 +156,8 @@ interface HomePageProps {
 
 export function HomePage({ onOpenConsent }: HomePageProps) {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [adEnabled, setAdEnabled] = useState(false);
   const [selectedMode, setSelectedMode] = useState(CONVERSATION_MODES[0].id);
   const [selectedInterests, setSelectedInterests] = useState<string[]>(['Music', 'Travel', 'Languages']);
   const [demoText, setDemoText] = useState('Hey! Do you want to practice Spanish or talk about travel?');
@@ -163,6 +167,24 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   const [translateError, setTranslateError] = useState<string | null>(null);
 
   const activeMode = CONVERSATION_MODES.find((m) => m.id === selectedMode) || CONVERSATION_MODES[0];
+
+  /** Require login before running an action; redirect to /login preserving the next step. */
+  const requireLogin = (next: () => void) => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    next();
+  };
+
+  /** Navigate to the chat studio, or to login first when signed out. */
+  const goChat = (query?: string) => {
+    requireLogin(() => navigate(query ? `/chat${query}` : '/chat'));
+  };
+
+  const toggleAd = () => {
+    setAdEnabled((v) => !v);
+  };
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -177,6 +199,11 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   const handleRunTranslationPreview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!demoText.trim()) return;
+    // Sign in required before using AI translation preview
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     setTranslating(true);
     setTranslateError(null);
     try {
@@ -199,8 +226,31 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors">
+    <div className={`min-h-screen flex flex-col bg-white dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors ${adEnabled ? 'ring-4 ring-inset ring-amber-400 dark:ring-amber-500' : ''}`}>
       <Header />
+
+      {/* Ad Toggle Bar */}
+      <div className={`sticky top-[57px] z-30 border-b transition-colors ${adEnabled ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-600/50' : 'bg-white dark:bg-[#17151D] border-neutral-200 dark:border-white/10'}`}>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-2 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+            <Tv2 className={`w-4 h-4 ${adEnabled ? 'text-amber-500 dark:text-amber-400' : 'text-neutral-400'}`} />
+            <span className={adEnabled ? 'text-amber-700 dark:text-amber-300 font-medium' : ''}>
+              {adEnabled ? 'Ads are ON — banner ads will appear on the site' : 'Ads are currently OFF'}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={toggleAd}
+            aria-pressed={adEnabled}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer ${adEnabled ? 'bg-amber-500' : 'bg-neutral-300 dark:bg-white/20'}`}
+          >
+            <span className="sr-only">{adEnabled ? 'Disable ads' : 'Enable ads'}</span>
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${adEnabled ? 'translate-x-6' : 'translate-x-1'}`}
+            />
+          </button>
+        </div>
+      </div>
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -230,18 +280,27 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                   <div className="mt-8 flex flex-wrap items-center gap-4">
                     <button
                       type="button"
-                      onClick={() => navigate('/chat')}
+                      onClick={() => goChat()}
                       className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white hover:bg-blue-700 transition-colors cursor-pointer whitespace-nowrap"
                     >
                       <span>Start chatting</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
-                    <Link
-                      to="/login"
-                      className="inline-flex items-center justify-center rounded-lg border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-3 text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-white/10 transition-colors whitespace-nowrap"
-                    >
-                      Create free account
-                    </Link>
+                    {user ? (
+                      <Link
+                        to={`/${user.slug}`}
+                        className="inline-flex items-center justify-center rounded-lg border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-3 text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-white/10 transition-colors whitespace-nowrap"
+                      >
+                        View my profile
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="inline-flex items-center justify-center rounded-lg border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-3 text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:bg-neutral-50 dark:hover:bg-white/10 transition-colors whitespace-nowrap"
+                      >
+                        Create free account
+                      </Link>
+                    )}
                   </div>
                 </div>
 
@@ -277,10 +336,11 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
 
                 <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
                   {COMMUNITY_PEOPLE.map((person) => (
-                    <Link
+                    <button
                       key={person.slug}
-                      to={`/chat?mode=${encodeURIComponent(person.mode.toLowerCase().replace(/\s+/g, '_'))}`}
-                      className="group flex flex-col items-center rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] p-2.5 hover:border-blue-600 dark:hover:border-blue-500 transition-colors text-center"
+                      type="button"
+                      onClick={() => goChat(`?mode=${encodeURIComponent(person.mode.toLowerCase().replace(/\s+/g, '_'))}`)}
+                      className="group flex flex-col items-center rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] p-2.5 hover:border-blue-600 dark:hover:border-blue-500 transition-colors text-center cursor-pointer"
                     >
                       <PersonAvatar name={person.fullName} variant={person.variant} size="md" />
                       <span className="mt-1.5 text-xs font-semibold text-neutral-900 dark:text-neutral-100 truncate max-w-full">
@@ -289,7 +349,7 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                       <span className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate max-w-full">
                         {person.country}
                       </span>
-                    </Link>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -312,6 +372,7 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
               <Link
                 to="/chat"
                 className="text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1.5 whitespace-nowrap"
+                onClick={(e) => { e.preventDefault(); goChat(); }}
               >
                 <span>Open matching studio</span>
                 <ArrowRight className="w-4 h-4" />
@@ -341,12 +402,13 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                       </p>
                     </div>
                   </div>
-                  <Link
-                    to="/chat"
-                    className="shrink-0 rounded-lg border border-neutral-200 dark:border-white/15 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:border-blue-600 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => goChat()}
+                    className="shrink-0 rounded-lg border border-neutral-200 dark:border-white/15 px-3 py-1.5 text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:border-blue-600 hover:text-blue-700 dark:hover:border-blue-500 dark:hover:text-blue-400 transition-colors cursor-pointer"
                   >
                     Connect
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
@@ -423,13 +485,14 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                       {activeMode.detail}
                     </p>
                     <div className="pt-1">
-                      <Link
-                        to={`/chat?mode=${activeMode.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                      <button
+                        type="button"
+                        onClick={() => goChat(`?mode=${activeMode.id}`)}
+                        className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors cursor-pointer"
                       >
                         <span>Try {activeMode.title}</span>
                         <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </button>
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -580,13 +643,14 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-neutral-200 dark:border-white/10">
-                  <Link
-                    to={`/chat?interests=${encodeURIComponent(selectedInterests.join(','))}`}
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                  <button
+                    type="button"
+                    onClick={() => goChat(`?interests=${encodeURIComponent(selectedInterests.join(','))}`)}
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 cursor-pointer"
                   >
                     <span>Match with these interests</span>
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -736,13 +800,14 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
                 Jump into a live 1-on-1 video, audio, or translated text chat in seconds—no downloads required.
               </p>
             </div>
-            <Link
-              to="/chat"
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors whitespace-nowrap shrink-0"
+            <button
+              type="button"
+              onClick={() => goChat()}
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               <Video className="w-4 h-4" />
               <span>Start for free</span>
-            </Link>
+            </button>
           </div>
         </section>
       </main>

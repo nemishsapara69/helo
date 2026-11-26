@@ -34,7 +34,7 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
         src={src}
         alt={name}
         referrerPolicy="no-referrer"
-        className={`${SIZES[size]} rounded-full object-cover border border-neutral-200 dark:border-white/15 shrink-0`}
+        className={`${SIZES[size]} rounded-full object-cover object-center border border-neutral-200 dark:border-white/15 shrink-0`}
       />
     );
   }
@@ -42,7 +42,7 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
   return (
     <svg
       viewBox="0 0 64 64"
-      className={`${SIZES[size]} rounded-full shrink-0 border border-neutral-200/80 dark:border-white/15`}
+      className={`${SIZES[size]} rounded-full shrink-0 overflow-hidden border border-neutral-200/80 dark:border-white/15`}
       role="img"
       aria-label={`${name} avatar`}
     >

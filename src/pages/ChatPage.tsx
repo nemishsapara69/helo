@@ -635,11 +635,11 @@ export function ChatPage() {
   const isInActiveSession = chatState === 'matched' || chatState === 'connected';
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-50 dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors">
+    <div className="h-screen flex flex-col bg-neutral-50 dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors overflow-hidden">
       <Header />
 
       {/* Top Conversation Modes Bar + Filter Bar */}
-      <div className="border-b border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] transition-colors">
+      <div className="sticky top-[57px] z-30 border-b border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] transition-colors">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 py-3 space-y-3">
           {/* Row 1: 5 Conversation Mode Tabs + Live Stats + Light/Dark Toggle */}
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -822,9 +822,9 @@ export function ChatPage() {
       </div>
 
       {/* Main Split Workspace: Video Stage + Chat Sidebar */}
-      <main className="flex-1 mx-auto w-full max-w-[1440px] px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <main className="flex-1 mx-auto w-full max-w-[1440px] px-4 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4 min-h-0">
         {/* Left: Video / Call Stage */}
-        <section className="lg:col-span-8 flex flex-col gap-3 min-h-[460px] lg:min-h-[600px]">
+        <section className="lg:col-span-8 flex flex-col gap-3 min-h-[380px] lg:min-h-0 lg:h-full">
           {statusBanner && (
             <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-800 dark:text-amber-200 flex items-center justify-between gap-3">
               <span>{statusBanner}</span>
@@ -846,7 +846,7 @@ export function ChatPage() {
           )}
 
           {/* Stage Viewport */}
-          <div className="relative flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] flex items-center justify-center transition-colors">
+          <div className="relative flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] flex items-center justify-center transition-colors min-h-[300px]">
             {/* Remote Video element */}
             <video
               ref={remoteVideoRef}
@@ -1159,7 +1159,7 @@ export function ChatPage() {
         </section>
 
         {/* Right: Chat Sidebar */}
-        <aside className="lg:col-span-4 rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] flex flex-col h-[500px] lg:h-auto transition-colors">
+        <aside className="lg:col-span-4 rounded-xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#17151D] flex flex-col h-[480px] lg:h-full transition-colors">
           <div className="border-b border-neutral-200 dark:border-white/10 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-blue-600 dark:text-blue-500" />
