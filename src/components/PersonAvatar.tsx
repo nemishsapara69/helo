@@ -46,26 +46,32 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
       role="img"
       aria-label={`${name} avatar`}
     >
-      {/* Full-circle background — rx="32" makes it perfectly round */}
-      <rect width="64" height="64" rx="32" fill={p.bg} />
-      {/* Body / shirt */}
-      <path d="M12 64C12 50 20 43 32 43C44 43 52 50 52 64H12Z" fill={p.shirt} />
+      {/* Circular background */}
+      <circle cx="32" cy="32" r="32" fill={p.bg} />
+
+      {/* Shirt / body — sits in lower half, stops at y=58 so it doesn't reach the circle edge */}
+      <path d="M14 62C14 50 21 44 32 44C43 44 50 50 50 62Z" fill={p.shirt} />
+
       {/* Head */}
-      <circle cx="32" cy="28" r="12" fill={p.skin} />
+      <circle cx="32" cy="27" r="11" fill={p.skin} />
+
       {/* Hair */}
       <path
-        d="M20 27C20 18.5 25.5 13.5 32.5 13.5C39.5 13.5 44 19 44 27C42.5 22.5 38 20 32 20C26 20 21.5 22.5 20 27Z"
+        d="M21 26C21 18 26 13.5 32 13.5C38 13.5 43 18 43 26C41.5 22 38 20 32 20C26 20 22.5 22 21 26Z"
         fill={p.hair}
       />
+
       {/* Eyes */}
-      <circle cx="28" cy="28" r="1.4" fill="#1E293B" />
-      <circle cx="36" cy="28" r="1.4" fill="#1E293B" />
+      <circle cx="28.5" cy="27" r="1.3" fill="#1E293B" />
+      <circle cx="35.5" cy="27" r="1.3" fill="#1E293B" />
+
       {/* Smile */}
       <path
-        d="M28.5 33.5C29.8 35 34.2 35 35.5 33.5"
+        d="M29 32C30.2 33.4 33.8 33.4 35 32"
         stroke="#1E293B"
-        strokeWidth="1.6"
+        strokeWidth="1.5"
         strokeLinecap="round"
+        fill="none"
       />
     </svg>
   );
