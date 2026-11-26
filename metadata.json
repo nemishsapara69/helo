@@ -1,0 +1,6 @@
+{
+  "name": "Helo",
+  "description": "Meet new people around the world with instant 1-on-1 video, audio, and translated text chat.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

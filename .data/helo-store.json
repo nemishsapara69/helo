@@ -1,0 +1,220 @@
+{
+  "users": [
+    {
+      "id": "user-sofia",
+      "slug": "sofia-morales",
+      "display_name": "Sofia Morales",
+      "email": "sofia@example.com",
+      "password_hash": "3786d47dd5964ccd5ba48653b7d3bc80:7a0976c5c2091397451b2b522db379577757ca0e3a8bcb5cd8386e13db7d5f5011fac1a6f9afd9df213d2e6a5136d9f87cbf85a9f751dcec5945311d03bc7818",
+      "dob": "1999-05-14",
+      "age": 27,
+      "gender": "female",
+      "country": "Spain",
+      "bio": "Visual designer learning Japanese and collecting espresso recipes.",
+      "avatar": "",
+      "interests": [
+        "Design",
+        "Travel",
+        "Coffee",
+        "Languages"
+      ],
+      "language": "es",
+      "auto_translate": true,
+      "default_mode": "language_practice",
+      "notifications": {
+        "email": true,
+        "push": false
+      },
+      "marketing_consent": false,
+      "trust_score": 98,
+      "banned": false,
+      "blocked_ids": [],
+      "created_at": "2026-10-12T10:00:00Z"
+    },
+    {
+      "id": "user-arjun",
+      "slug": "arjun-nair",
+      "display_name": "Arjun Nair",
+      "email": "arjun@example.com",
+      "password_hash": "01a827ff8c2a823eefa487519589c1dd:4279fc39027d6cc67c735de9339e0346c1e6951001800e0ca513bd642b748f1040e38dd0dcd48665e9c4f0d6e41676819924a95eb5f7f1daf872358bb17670e6",
+      "dob": "1997-08-21",
+      "age": 29,
+      "gender": "male",
+      "country": "India",
+      "bio": "Audio tinkerer, astronomy nerd, always up for deep talks.",
+      "avatar": "",
+      "interests": [
+        "Tech",
+        "Astronomy",
+        "Music",
+        "Philosophy"
+      ],
+      "language": "hi",
+      "auto_translate": true,
+      "default_mode": "deep_talks",
+      "notifications": {
+        "email": true,
+        "push": true
+      },
+      "marketing_consent": false,
+      "trust_score": 96,
+      "banned": false,
+      "blocked_ids": [],
+      "created_at": "2026-10-18T11:20:00Z"
+    },
+    {
+      "id": "user-467fa1c8-c8b8-48b9-b797-5fe34c72d65f",
+      "slug": "test-user",
+      "display_name": "Test User",
+      "email": "testuser@example.com",
+      "password_hash": "d1a75c72ce27d3e0c452554f0c19aa73:1f9c7eea6476056105b2101fcc4fa7c1376a6f832045da7ed962377a5e439835d1b29839a23459fd53a4ba957189ffe4bcc995cec5710322d61ee021ece678f5",
+      "dob": "1995-05-15",
+      "age": 31,
+      "gender": "male",
+      "country": "India",
+      "bio": "",
+      "avatar": "",
+      "interests": [
+        "Music",
+        "Travel"
+      ],
+      "language": "en",
+      "auto_translate": true,
+      "default_mode": "just_chat",
+      "notifications": {
+        "email": false,
+        "push": false
+      },
+      "marketing_consent": false,
+      "trust_score": 95,
+      "banned": false,
+      "blocked_ids": [],
+      "created_at": "2026-11-26T11:20:03.560Z"
+    }
+  ],
+  "stories": [
+    {
+      "id": "story-0f1558a7-30c0-4e78-985c-3c414d43a509",
+      "author_name": "Test User",
+      "author_handle": "@test-user",
+      "category": "Tech",
+      "title": "Test story",
+      "caption": "Testing auth enforcement on story post",
+      "media_url": "/src/assets/images/story_friendship_1795686520171.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-26T11:20:03.626Z",
+      "location": "Global"
+    },
+    {
+      "id": "story-1",
+      "author_name": "Sofia Morales",
+      "author_handle": "@sofiam",
+      "category": "Friendship",
+      "title": "Two strangers in Madrid & Seoul turned into weekly coffee catchups",
+      "caption": "Matched on Make a Friend while sketching in a rainy afternoon cafe. Six months later we still call every Sunday morning.",
+      "media_url": "/src/assets/images/story_friendship_1795686520171.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-22T14:30:00Z",
+      "location": "Madrid, Spain"
+    },
+    {
+      "id": "story-2",
+      "author_name": "Yuki Tanaka",
+      "author_handle": "@yukit",
+      "category": "Culture",
+      "title": "Midnight Kyoto walk shared live with someone in Toronto",
+      "caption": "Showed the lantern alleys of Pontocho during an evening walk while learning how winter feels across the ocean.",
+      "media_url": "/src/assets/images/story_culture_1795686521141.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-23T19:15:00Z",
+      "location": "Kyoto, Japan"
+    },
+    {
+      "id": "story-3",
+      "author_name": "Lucas Weber",
+      "author_handle": "@lucasw",
+      "category": "Language",
+      "title": "Cleared my B2 Spanish conversation anxiety in three weeks",
+      "caption": "Using Language Practice mode with inline translation meant I never froze when I forgot a verb.",
+      "media_url": "/src/assets/images/story_language_1795686520129.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-24T09:45:00Z",
+      "location": "Berlin, Germany"
+    },
+    {
+      "id": "story-4",
+      "author_name": "Emma Wright",
+      "author_handle": "@emmaw",
+      "category": "Music",
+      "title": "Swapping acoustic chord progressions across time zones",
+      "caption": "Filtered by Music and Indie, met a session bassist in Mumbai, and co-wrote a chorus in 25 minutes.",
+      "media_url": "/src/assets/images/story_music_1795686520469.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-25T16:10:00Z",
+      "location": "Bristol, UK"
+    },
+    {
+      "id": "story-5",
+      "author_name": "Arjun Nair",
+      "author_handle": "@arjunn",
+      "category": "Travel",
+      "title": "Getting local street food recs before landing in Lisbon",
+      "caption": "Set my country filter to Portugal on Deep Talks and got a hand-typed list of neighborhood bakeries.",
+      "media_url": "/src/assets/images/hero_video_chat_1795686521049.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-25T20:05:00Z",
+      "location": "Bengaluru, India"
+    },
+    {
+      "id": "story-6",
+      "author_name": "Omar Hassan",
+      "author_handle": "@omarh",
+      "category": "Career",
+      "title": "Mock product design critiques with peers around the globe",
+      "caption": "Speed Round gave me crisp 60-second portfolio feedback from designers I would never have crossed paths with.",
+      "media_url": "/src/assets/images/story_language_1795686520129.jpg",
+      "privacy": "public",
+      "created_at": "2026-11-26T00:10:00Z",
+      "location": "Cairo, Egypt"
+    }
+  ],
+  "reports": [
+    {
+      "id": "rep-101",
+      "session_id": "sess-demo-881",
+      "reporter_id": "user-sofia",
+      "reported_user_id": "user-arjun",
+      "reported_name": "Guest #4821",
+      "reason": "spam",
+      "details": "Repeated promotional links dropped in chat sidebar.",
+      "status": "resolved",
+      "created_at": "2026-11-26T11:17:06.275Z",
+      "resolved_at": "2026-11-26T11:17:06.277Z"
+    }
+  ],
+  "adminCredentialHash": "351550e0110e8e0b24493ded7a918c8f:ba11043fa573f24711b0aaa9228bc9f5827ab199945a0a6638145dc6b6356cb1d9927dafaa222a836f4620d224ecf6b38e6205fbb759984955c8d346569dad78",
+  "unsubscribedEmails": [],
+  "consentLogs": [
+    {
+      "id": "consent-41493cd2",
+      "preferences": {
+        "essential": true,
+        "analytics": true,
+        "translation_memory": true
+      },
+      "timestamp": "2026-11-26T11:36:36.660Z"
+    }
+  ],
+  "passwordResetRequests": [
+    {
+      "email": "test@example.com",
+      "requested_at": "2026-11-26T11:19:29.538Z"
+    },
+    {
+      "email": "testuser@example.com",
+      "requested_at": "2026-11-26T11:20:53.846Z"
+    }
+  ],
+  "passwordResetTokens": [],
+  "friends": []
+}
