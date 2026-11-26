@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LogOut, Menu, Settings, User, X } from 'lucide-react';
+import { LogOut, Menu, Moon, Settings, Sun, User, X } from 'lucide-react';
 import { LogoMark } from './Logo';
 import { PersonAvatar } from './PersonAvatar';
 import { useAuth } from '../context/AuthContext';
@@ -15,7 +15,7 @@ export function Header({ dark }: HeaderProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement | null>(null);
   const { user, logout } = useAuth();
-  const { isDark: themeIsDark } = useTheme();
+  const { isDark: themeIsDark, toggleTheme } = useTheme();
   const isDark = dark !== undefined ? dark : themeIsDark;
   const location = useLocation();
   const navigate = useNavigate();
@@ -100,8 +100,21 @@ export function Header({ dark }: HeaderProps) {
           })}
         </nav>
 
-        {/* Zone 3: Log in button or User Profile Picture */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        {/* Zone 3: Theme toggle + Log in button or User Profile Picture */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Round light/dark mode toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-full border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+              isDark
+                ? 'border-white/15 bg-white/5 text-amber-400 hover:bg-white/10'
+                : 'border-neutral-200 bg-neutral-100 text-blue-600 hover:bg-neutral-200'
+            }`}
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
           {user ? (
             <div ref={profileMenuRef} className="relative">
               <button

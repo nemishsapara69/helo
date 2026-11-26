@@ -5,10 +5,8 @@ import {
   Globe2,
   Languages,
   Lock,
-  Moon,
   ShieldCheck,
   SlidersHorizontal,
-  Sun,
   UserCheck,
   Video,
 } from 'lucide-react';
@@ -21,7 +19,6 @@ import { ConnectionArcGraphic } from '../components/LiveMatchGraphic';
 import { CONVERSATION_MODES, INTERESTS, LANGUAGES } from '../shared/constants';
 import { apiRequest } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 
 const COMMUNITY_PEOPLE = [
   {
@@ -159,7 +156,6 @@ interface HomePageProps {
 export function HomePage({ onOpenConsent }: HomePageProps) {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
   const [selectedMode, setSelectedMode] = useState(CONVERSATION_MODES[0].id);
   const [selectedInterests, setSelectedInterests] = useState<string[]>(['Music', 'Travel', 'Languages']);
   const [demoText, setDemoText] = useState('Hey! Do you want to practice Spanish or talk about travel?');
@@ -227,30 +223,6 @@ export function HomePage({ onOpenConsent }: HomePageProps) {
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-[#0E0A1C] text-neutral-900 dark:text-neutral-100 transition-colors">
       <Header />
-
-      {/* Theme Toggle Bar */}
-      <div className="sticky top-[57px] z-30 border-b border-neutral-200 dark:border-white/10 bg-white/95 dark:bg-[#17151D]/95 backdrop-blur-md transition-colors">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-2 flex items-center justify-end">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 dark:border-white/15 bg-neutral-100 dark:bg-white/5 px-3.5 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-white/10 transition-colors cursor-pointer"
-          >
-            {isDark ? (
-              <>
-                <Sun className="w-4 h-4 text-amber-400" />
-                <span>Light mode</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-4 h-4 text-blue-600" />
-                <span>Dark mode</span>
-              </>
-            )}
-          </button>
-        </div>
-      </div>
 
       <main className="flex-1">
         {/* Hero Section */}

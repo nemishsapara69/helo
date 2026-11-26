@@ -34,7 +34,7 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
         src={src}
         alt={name}
         referrerPolicy="no-referrer"
-        className={`${SIZES[size]} rounded-full object-cover object-center border border-neutral-200 dark:border-white/15 shrink-0`}
+        className={`${SIZES[size]} rounded-full object-cover object-center shrink-0`}
       />
     );
   }
@@ -42,19 +42,25 @@ export function PersonAvatar({ name, src, variant, size = 'md' }: PersonAvatarPr
   return (
     <svg
       viewBox="0 0 64 64"
-      className={`${SIZES[size]} rounded-full shrink-0 overflow-hidden border border-neutral-200/80 dark:border-white/15`}
+      className={`${SIZES[size]} rounded-full shrink-0 overflow-hidden`}
       role="img"
       aria-label={`${name} avatar`}
     >
+      {/* Full-circle background — rx="32" makes it perfectly round */}
       <rect width="64" height="64" rx="32" fill={p.bg} />
+      {/* Body / shirt */}
       <path d="M12 64C12 50 20 43 32 43C44 43 52 50 52 64H12Z" fill={p.shirt} />
+      {/* Head */}
       <circle cx="32" cy="28" r="12" fill={p.skin} />
+      {/* Hair */}
       <path
         d="M20 27C20 18.5 25.5 13.5 32.5 13.5C39.5 13.5 44 19 44 27C42.5 22.5 38 20 32 20C26 20 21.5 22.5 20 27Z"
         fill={p.hair}
       />
+      {/* Eyes */}
       <circle cx="28" cy="28" r="1.4" fill="#1E293B" />
       <circle cx="36" cy="28" r="1.4" fill="#1E293B" />
+      {/* Smile */}
       <path
         d="M28.5 33.5C29.8 35 34.2 35 35.5 33.5"
         stroke="#1E293B"

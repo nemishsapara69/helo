@@ -157,7 +157,7 @@ export function StoriesPage() {
                   onClick={() => setViewerIndex(idx)}
                   className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer"
                 >
-                  <div className="flex items-center justify-center rounded-full overflow-hidden p-0.5 ring-2 ring-blue-600 ring-offset-2 ring-offset-neutral-50 dark:ring-offset-[#17151D] group-hover:scale-105 transition-transform">
+                  <div className="flex items-center justify-center rounded-full overflow-hidden ring-2 ring-blue-600 ring-offset-2 ring-offset-neutral-50 dark:ring-offset-[#17151D] group-hover:scale-105 transition-transform">
                     <PersonAvatar name={story.author_name} variant={idx} size="lg" />
                   </div>
                   <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200 max-w-[76px] truncate">
