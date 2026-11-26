@@ -66,13 +66,13 @@ export function Header({ dark }: HeaderProps) {
           : 'bg-white/95 border-neutral-200 text-neutral-900 backdrop-blur-md'
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-8 px-4 sm:px-6 py-3.5">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-8 px-4 sm:px-6 py-4">
         {/* Zone 1: Brand wordmark */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 text-lg font-bold tracking-tight whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+          className="flex items-center gap-3 text-2xl font-bold tracking-tight whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
         >
-          <LogoMark className="w-7 h-7 shrink-0" />
+          <LogoMark className="w-10 h-10 shrink-0" />
           <span>Helo</span>
         </Link>
 
@@ -84,7 +84,7 @@ export function Header({ dark }: HeaderProps) {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`text-sm font-medium whitespace-nowrap shrink-0 transition-colors hover:underline underline-offset-4 ${
+                className={`text-base font-medium whitespace-nowrap shrink-0 transition-colors hover:underline underline-offset-4 ${
                   isDark
                     ? active
                       ? 'text-white'
@@ -101,19 +101,19 @@ export function Header({ dark }: HeaderProps) {
         </nav>
 
         {/* Zone 3: Theme toggle + Log in button or User Profile Picture */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           {/* Round light/dark mode toggle */}
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={`inline-flex items-center justify-center w-9 h-9 rounded-full border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+            className={`inline-flex items-center justify-center w-10 h-10 rounded-full border transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
               isDark
                 ? 'border-white/15 bg-white/5 text-amber-400 hover:bg-white/10'
                 : 'border-neutral-200 bg-neutral-100 text-blue-600 hover:bg-neutral-200'
             }`}
           >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
           {user ? (
             <div ref={profileMenuRef} className="relative">
@@ -199,7 +199,7 @@ export function Header({ dark }: HeaderProps) {
           ) : (
             <Link
               to="/login"
-              className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-base font-semibold text-white hover:bg-blue-700 transition-colors whitespace-nowrap shrink-0"
             >
               Log in
             </Link>
